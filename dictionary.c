@@ -14,6 +14,7 @@
 // }node;
 
 node *root = NULL;
+unsigned int dsize = 0;
 
 /**
  * Returns true if word is in dictionary else false.
@@ -82,6 +83,7 @@ bool load(const char *dictionary)
             current->islast = true;
             current = root;
             i = 0;
+            dsize++;
         }else{
             index = c - 97;
             //printf("%i , %i, %c\n",i , index, c);
@@ -94,6 +96,10 @@ bool load(const char *dictionary)
         c = fgetc(dfile);
     }
     
+    free(&index);
+    free(&c);
+    free(dfile);
+    
     return true;
 }
 
@@ -102,8 +108,23 @@ bool load(const char *dictionary)
  */
 unsigned int size(void)
 {
-    // TODO
-    return 0;
+    return dsize;
+}
+
+
+void unloadnode(node *current){
+    for(int i = 0; i < 27; i++){
+        if(current->children[i] != NULL){
+            //printf("%c", i + 97);
+            unloadnode(current->children[i]);
+        }
+    }
+    //free(&(current->islast));
+    //free(current->children);
+    //printf("\n");
+    if(current != NULL){
+        free(current);
+    }
 }
 
 /**
@@ -111,6 +132,7 @@ unsigned int size(void)
  */
 bool unload(void)
 {
-    // TODO
-    return false;
+    unloadnode(root);
+    
+    return true;
 }
