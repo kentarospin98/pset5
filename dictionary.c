@@ -23,21 +23,24 @@ bool check(const char *word)
     //printf("%s \n", word);
     //printf("Check %d", root->islast);
     //printf("Okay...");
+    //printf("Test");
     node *current;
+        //printf("Test");
     if(root != NULL){
         current = root;
     }else{
         return false;
     }
-    //printf("Test");
     for(int i = 0; word[i] != '\0'; i++){
         int index = 0;
-        if(word[i] > 65 && word[i] <= 90){
-            index = -40;
-        }else if(!(word[i] > 97 && word[i] <= 122)){
+        char c = word[i];
+        if(c >= 65 && c <= 90){
+            index = c - 65;
+        }else if(word[i] >= 97 && word[i] <= 122){
+            index = c - 97;
+        }else{
             return false;
         }
-        index += word[i] - 97;
         //printf("%c %i ", word[i], index);
         if(current->children[index] != NULL){
             //printf("%d", current->islast);
